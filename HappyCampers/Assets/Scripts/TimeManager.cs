@@ -6,9 +6,9 @@ public class TimeManager : MonoBehaviour
     public static TimeManager Instance;
 
     [Header("Day Settings")]
-    public float realSecondsPerDay = 900f;
-    public int hoursPerDay = 15;
     public int currentDay = 1;
+    private const float realSecondsPerDay = 900f;
+    private const int hoursPerDay = 15;
 
     [Header("Phases")]
     public DayPhase currentPhase;
@@ -20,8 +20,9 @@ public class TimeManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI dayText;
 
     private float totalTime; // total time in seconds
-    private int currentHour;
-    private int currentMinute;
+    public int CurrentHour { get; private set; }
+    public int CurrentMinute { get; private set; }
+
 
     void Awake()
     {
@@ -35,7 +36,7 @@ public class TimeManager : MonoBehaviour
         }
     }
 
-    void Update()
+    void FixedUpdate()
     {
         totalTime += Time.deltaTime;
 
@@ -50,8 +51,8 @@ public class TimeManager : MonoBehaviour
         float dayProgress = totalTime / realSecondsPerDay;
         float totalGameHours = dayProgress * hoursPerDay;
 
-        currentHour = Mathf.FloorToInt(totalGameHours);
-        currentMinute = Mathf.FloorToInt((totalGameHours - currentHour) * 60f);
+        CurrentHour = Mathf.FloorToInt(totalGameHours);
+        CurrentMinute = Mathf.FloorToInt((totalGameHours - CurrentHour) * 60f);
 
         UpdateDayPhase();
         UpdateUI();
@@ -59,8 +60,8 @@ public class TimeManager : MonoBehaviour
 
     private void UpdateUI()
     {
-        int displayHour = (currentHour % 12 == 0) ? 12 : currentHour % 12;
-        string clockTime = displayHour + ":" + currentMinute.ToString("00");
+        int displayHour = (CurrentHour % 12 == 0) ? 12 : CurrentHour % 12;
+        string clockTime = displayHour + ":" + CurrentMinute.ToString("00");
 
         timeText.text = clockTime;
         phaseText.text = currentPhase.ToString();
@@ -69,9 +70,9 @@ public class TimeManager : MonoBehaviour
 
     private void UpdateDayPhase()
     {
-        if (currentHour < 5)
+        if (CurrentHour < 5)
             currentPhase = DayPhase.Afternoon;
-        else if (currentHour < 10)
+        else if (CurrentHour < 10)
             currentPhase = DayPhase.Evening;
         else
             currentPhase = DayPhase.Night;
