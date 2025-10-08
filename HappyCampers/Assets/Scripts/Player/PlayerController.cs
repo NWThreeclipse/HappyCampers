@@ -79,7 +79,7 @@ public class PlayerController : MonoBehaviour
     void FixedUpdate()
     {
         elapsedTime += Time.deltaTime;
-        Debug.Log("Elapsed Time: " + elapsedTime);
+        // Debug.Log("Elapsed Time: " + elapsedTime);
         // rb.AddForce(movement * moveSpeed * Time.deltaTime);
         rb.linearVelocity = movement.normalized * moveSpeed;
 
@@ -96,7 +96,7 @@ public class PlayerController : MonoBehaviour
     {
         // if (collision.gameObject.CompareTag("Ground"))
         {
-            Debug.Log("Grounded");
+            // Debug.Log("Grounded");
             // isGrounded = true;
         }
     }
@@ -105,7 +105,7 @@ public class PlayerController : MonoBehaviour
     {
         // if (collision.gameObject.CompareTag("Ground"))
         {
-            Debug.Log("Grounded FAlse");
+            // Debug.Log("Grounded FAlse");
             // isGrounded = false;
         }
     }

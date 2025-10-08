@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class CamperState
+public abstract class CamperState
 {
     protected Camper camper;
     protected CamperStateMachine stateMachine;

@@ -10,14 +10,17 @@ public class WanderState : CamperState
     }
     public override void Enter()
     {
-        base.Enter();
+        //Not needed as base class has no logic
+        // base.Enter();
+        Debug.Log("Entering Wander State");
 
         GenerateNewPoint(camper.wanderRange);
     }
 
     public override void Execute()
     {
-        base.Execute();
+        //Not needed as base class has no logic
+        // base.Execute();
 
         //Calculates direction to random position
         moveDir = (randomPos - camper.transform.position).normalized;
@@ -31,7 +34,10 @@ public class WanderState : CamperState
 
     public override void Exit()
     {
-        base.Exit();
+        Debug.Log("Exiting Wander State");
+
+        //Not needed as base class has no logic
+        // base.Exit();
     }
 
     private void GenerateNewPoint(float range)
