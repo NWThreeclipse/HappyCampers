@@ -2,7 +2,6 @@ using UnityEngine;
 
 public class FollowState : CamperState
 {
-    private Vector3 moveDir;
     public FollowState(Camper camper, CamperStateMachine camperStateMachine) : base(camper, camperStateMachine)
     {
 
@@ -19,13 +18,13 @@ public class FollowState : CamperState
     {
         base.Execute();
 
+        Vector3 directionToPlayer = (camper.player.position - camper.transform.position).normalized;
+        Vector3 targetPosition = camper.player.position - directionToPlayer * 1.5f;
+
         // Camper follows until they are next to player
         if ((camper.transform.position - camper.player.position).sqrMagnitude > 1f)
         {
-            // Calculates direction to player
-            moveDir = (camper.player.position - camper.transform.position).normalized;
-
-            camper.Move(moveDir * camper.followSpeed);
+            camper.GoTo(targetPosition);
         }
     }
 
