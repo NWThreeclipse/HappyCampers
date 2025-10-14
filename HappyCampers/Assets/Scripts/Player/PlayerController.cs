@@ -28,6 +28,7 @@ public class PlayerController : MonoBehaviour
     private string conversationTargetName = "";         // New variable to hold the NPC's name
 
     private int camperPoints = 0;
+    public int CamperPoints => camperPoints;
 
     // public TextMeshPro camperHUD; 
     [SerializeField] private TMPro.TextMeshProUGUI camperHUD;

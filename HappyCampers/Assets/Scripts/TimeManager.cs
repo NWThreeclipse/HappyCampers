@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using TMPro;
 using UnityEngine.Rendering.Universal;
+using UnityEditor.Networking.PlayerConnection;
 public class TimeManager : MonoBehaviour
 {
     public static TimeManager Instance;
@@ -14,10 +15,13 @@ public class TimeManager : MonoBehaviour
     public DayPhase currentPhase;
     public enum DayPhase { Afternoon, Evening, Night }
 
+    public PlayerController player;
     [Header("UI Displays")]
     [SerializeField] private TextMeshProUGUI timeText;
     [SerializeField] private TextMeshProUGUI phaseText;
     [SerializeField] private TextMeshProUGUI dayText;
+    [SerializeField] private GameObject endPanel;
+    [SerializeField] private TextMeshProUGUI pointDisplay;
 
     [Header("Lighting")]
     [SerializeField] private Light2D sunLight;
@@ -28,6 +32,7 @@ public class TimeManager : MonoBehaviour
     public int CurrentHour { get; private set; }
     public int CurrentMinute { get; private set; }
 
+    private bool dayEnded = false;
 
     void Awake()
     {
@@ -43,13 +48,17 @@ public class TimeManager : MonoBehaviour
 
     void FixedUpdate()
     {
+        // If day ended, freeze time
+        if (dayEnded)
+            return;
+
         totalTime += Time.deltaTime;
 
-        // Reset if we passed one whole day
+        // End day when time reaches cutoff
         if (totalTime >= realSecondsPerDay)
         {
-            totalTime = 0f;
-            currentDay++;
+            DayEnd();
+            return;
         }
 
         // Calculate current hour and minute from total time
@@ -87,8 +96,7 @@ public class TimeManager : MonoBehaviour
 
     public void SkipToNextDay()
     {
-        totalTime = 0f;
-        currentDay++;
+        NewDay();
     }
     public void SkipHour()
     {
@@ -103,7 +111,30 @@ public class TimeManager : MonoBehaviour
         if (totalTime >= realSecondsPerDay)
         {
             totalTime -= realSecondsPerDay;
-            currentDay++;
+            DayEnd();
         }
+    }
+
+    public void DayEnd()
+    {
+        dayEnded = true;
+
+        // Show the end panel and update the text
+        endPanel.SetActive(true);
+        if (pointDisplay != null)
+        {
+            pointDisplay.text = "Score: " + player.CamperPoints;
+        }
+    }
+
+    public void NewDay()
+    {
+        dayEnded = false;
+        totalTime = 0f;
+        currentDay++;
+
+        // Hide the panel and refresh UI
+        endPanel.SetActive(false);
+        UpdateUI();
     }
 }
