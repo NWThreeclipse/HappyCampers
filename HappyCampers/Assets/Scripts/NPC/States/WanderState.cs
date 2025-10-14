@@ -13,7 +13,9 @@ public class WanderState : CamperState
     }
     public override void Enter()
     {
-        base.Enter();
+        //Not needed as base class has no logic
+        // base.Enter();
+        Debug.Log("Entering Wander State");
 
         GenerateNewPoint(camper.wanderRange);
         camper.GoTo(randomPos);
@@ -21,7 +23,8 @@ public class WanderState : CamperState
 
     public override void Execute()
     {
-        base.Execute();
+        //Not needed as base class has no logic
+        // base.Execute();
 
         if (isWaiting)
         {
@@ -46,7 +49,10 @@ public class WanderState : CamperState
 
     public override void Exit()
     {
-        base.Exit();
+        Debug.Log("Exiting Wander State");
+
+        //Not needed as base class has no logic
+        // base.Exit();
     }
 
     private void GenerateNewPoint(float range)
