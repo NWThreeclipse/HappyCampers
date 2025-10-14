@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 using TMPro;
-using UnityEngine.Rendering.Universal;
+
 public class TimeManager : MonoBehaviour
 {
     public static TimeManager Instance;
@@ -18,11 +18,6 @@ public class TimeManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI timeText;
     [SerializeField] private TextMeshProUGUI phaseText;
     [SerializeField] private TextMeshProUGUI dayText;
-
-    [Header("Lighting")]
-    [SerializeField] private Light2D sunLight;
-    [SerializeField] private Color dayColour;
-    [SerializeField] private Color nightColour;
 
     private float totalTime; // total time in seconds
     public int CurrentHour { get; private set; }
@@ -58,8 +53,6 @@ public class TimeManager : MonoBehaviour
 
         CurrentHour = Mathf.FloorToInt(totalGameHours);
         CurrentMinute = Mathf.FloorToInt((totalGameHours - CurrentHour) * 60f);
-
-        sunLight.color = Color.Lerp(dayColour, nightColour, dayProgress);
 
         UpdateDayPhase();
         UpdateUI();
