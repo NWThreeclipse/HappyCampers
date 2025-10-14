@@ -40,11 +40,11 @@ public class Camper : MonoBehaviour
 
         //Debug Keys
         if (Input.GetKeyDown(KeyCode.Alpha1))   // Press 1 to make Camper idle
-            this.StateMachine.ChangeState(Idle);
+            StateMachine.ChangeState(Idle);
         if (Input.GetKeyDown(KeyCode.Alpha2))   // Press 2 to make Camper wander
-            this.StateMachine.ChangeState(Wander);
+            StateMachine.ChangeState(Wander);
         if (Input.GetKeyDown(KeyCode.Alpha3))   // Press 3 to make Camper follow
-            this.StateMachine.ChangeState(Follow);
+            StateMachine.ChangeState(Follow);
     }
 
     public void Move(Vector2 moveDir)
