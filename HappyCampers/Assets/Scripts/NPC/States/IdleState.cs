@@ -8,8 +8,7 @@ public class IdleState : CamperState
     }
     public override void Enter()
     {
-        // base.Enter();
-        Debug.Log("Entering Idle State");
+        base.Enter();
     }
 
     public override void Execute()
@@ -20,6 +19,5 @@ public class IdleState : CamperState
     public override void Exit()
     {
         base.Exit();
-        Debug.Log("Exiting Idle State");
     }
 }

@@ -9,9 +9,7 @@ public class FollowState : CamperState
     }
     public override void Enter()
     {
-        //Not needed as base class has no logic
-        // base.Enter();
-        Debug.Log("Entering Wander State");
+        base.Enter();
 
         if (camper.player == null)
             camper.StateMachine.ChangeState(camper.Wander);
@@ -19,8 +17,7 @@ public class FollowState : CamperState
 
     public override void Execute()
     {
-        //Not needed as base class has no logic
-        // base.Execute();
+        base.Execute();
 
         // Camper follows until they are next to player
         if ((camper.transform.position - camper.player.position).sqrMagnitude > 1f)
@@ -34,8 +31,6 @@ public class FollowState : CamperState
 
     public override void Exit()
     {
-        Debug.Log("Exiting Wander State");
-        //Not needed as base class has no logic
-        // base.Exit();
+        base.Exit();
     }
 }

@@ -1,9 +1,0 @@
--- Tasks -- 
-- Temporary UI for objects
-
--- Done --
-
-- Interaction prompt when player is adjacent to NPC,
-- Simple Choice menu for dialogue
-- Point generation system (NPC assigned to activity or self-assigned generates points over time, specific values dont matter for now),
-- 3 Placeable objects (Can drop them and they stick to the floor, collision detection, can pick them up),
