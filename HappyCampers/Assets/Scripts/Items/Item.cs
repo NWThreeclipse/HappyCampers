@@ -1,9 +1,28 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 public abstract class Item : MonoBehaviour
 {
     private Rigidbody2D rb;
     private bool itemIsPickedUp = false;
+
+    public enum ItemType
+    {
+        Cozy,
+        Spooky,
+        Educational,
+        Zen,
+        Funny,
+        Glamp,
+        Survivalist,
+        Romantic,
+        Nature,
+        Art,
+        Celebration,
+        Corporate
+    }
+
+    protected ItemType currentItemType;
 
     void Awake()
     {
@@ -47,9 +66,19 @@ public abstract class Item : MonoBehaviour
             float dropForce = 5f;
             rb.AddForce(dropDirection * dropForce, ForceMode2D.Impulse);
         }
-        
+
         // Optional: Re-enable the collider if you disabled it on pickup
         // Collider2D collider = GetComponent<Collider2D>();
         // if (collider != null) collider.enabled = true;
     }
+
+    protected virtual void OnTriggerEnter2D(Collider2D other)
+    {
+        Debug.Log($"Other collider {other.name}");
+        if(other.name == "Fire")
+        {
+            Debug.Log($"Item: {name} Generate Points for {currentItemType} : 10");
+        }
+    }
+    
 }

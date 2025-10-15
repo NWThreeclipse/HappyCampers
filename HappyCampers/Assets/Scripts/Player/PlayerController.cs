@@ -38,6 +38,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Item itemToPickUp = null;                // Reference to the item component
     private bool isHoldingItem = false;               // New variable to track if an item is currently held
 
+    private bool toggleRun = false;
 
 
     private void Awake()
@@ -88,10 +89,19 @@ public class PlayerController : MonoBehaviour
         // }
 
 
-        if (Input.GetKeyDown(KeyCode.H))
+        if (Input.GetKeyDown(KeyCode.Space))
         {
+            Debug.Log("RUNNING");
+            toggleRun = !toggleRun;
+            // moveSpeed = 10f;
+
             // score += 2000; // Increment score by 10 when H is presse`d
         }
+
+        if (toggleRun)
+            moveSpeed = 10f;
+        else
+            moveSpeed = 3f;
 
         // if (camperInRange)
         // {
@@ -129,15 +139,18 @@ public class PlayerController : MonoBehaviour
         if (isChoosingConversationOption)
         {
             int option = 0;
-            if (Input.GetKeyDown(KeyCode.Alpha8)) option = 1;
-            else if (Input.GetKeyDown(KeyCode.Alpha9)) option = 2;
-            else if (Input.GetKeyDown(KeyCode.Alpha0)) option = 3;
+            if (Input.GetKeyDown(KeyCode.Alpha1)) option = 1;
+            else if (Input.GetKeyDown(KeyCode.Alpha2)) option = 2;
+            else if (Input.GetKeyDown(KeyCode.Alpha3)) option = 3;
 
             if (option != 0)
             {
                 // If a valid option is pressed, process it and exit the choice state
                 HandleConversationOption(option, conversationTargetName);
             }
+
+            // if(Input.GetKeyDown(KeyCode.Escape))
+            //     DialogBox.instance.CloseDialog();
         }
 
     }
@@ -228,6 +241,7 @@ public class PlayerController : MonoBehaviour
         {
             // playerInRange = false;
             Debug.Log($"{other.name} walked away. Conversation cancelled.");
+            DialogBox.instance.CloseDialog();
             camperInRange = false;
         }
 
@@ -251,12 +265,32 @@ public class PlayerController : MonoBehaviour
         conversationTargetName = playerName;
 
         // Display the prompt to the player
-        Debug.Log($"--- Starting conversation with {playerName} ---");
-        Debug.Log("Choose an option:");
-        Debug.Log("Press '1' for: Small Talk");
-        Debug.Log("Press '2' for: Entertain");
-        Debug.Log("Press '3' for: Compete");
+        // Debug.Log($"--- Starting conversation with {playerName} ---");
+        DialogBox.instance.ShowDialog($"--- Starting conversation with {playerName} ---");
+        // Debug.Log("Choose an option:");
+        // Debug.Log("Press '1' for: Small Talk");
+        // Debug.Log("Press '2' for: Entertain");
+        // Debug.Log("Press '3' for: Compete");
         // Here you would open a dialogue UI with the buttons/options
+       StartCoroutine(ShowOptionsAfterDialog());
+    }
+
+
+    private IEnumerator ShowOptionsAfterDialog()
+    {
+        // Wait until the current dialog is fully typed and player presses the key
+        while (DialogBox.instance.IsTyping)
+            yield return null;
+
+        // Now show the conversation options
+        string options = "Choose an option:\n" +
+                         "Press '1' for: Small Talk\n" +
+                         "Press '2' for: Entertain\n" +
+                         "Press '3' for: Compete";
+
+        DialogBox.instance.ShowDialog(options);
+
+        // At this point you could enable UI buttons or input handling
     }
 
     private void HandleConversationOption(int option, string playerName)
@@ -267,7 +301,8 @@ public class PlayerController : MonoBehaviour
         switch (option)
         {
             case 1:
-                Debug.Log($"[SMALL TALK] Dialog Begins with {playerName}.");
+                DialogBox.instance.ShowDialog( $"[SMALL TALK] Dialog Begins with {playerName}.");
+                // Debug.Log($"[SMALL TALK] Dialog Begins with {playerName}.");
                 int conversationRating = UnityEngine.Random.Range(1, 11);
                 if (conversationRating < 5)
                     // camperPoints -= 1;
@@ -280,7 +315,8 @@ public class PlayerController : MonoBehaviour
                 break;
 
             case 2:
-                Debug.Log($"[ENTERTAIN] Attempting to entertain {playerName}.");
+                // Debug.Log($"[ENTERTAIN] Attempting to entertain {playerName}.");
+                DialogBox.instance.ShowDialog( $"[SMALL TALK] Dialog Begins with {playerName}.");
                 int entertainmentRating = UnityEngine.Random.Range(1, 11);
                 if (entertainmentRating < 5)
                     // camperPoints -= 1;
@@ -293,7 +329,8 @@ public class PlayerController : MonoBehaviour
                 break;
 
             case 3:
-                Debug.Log($"[COMPETE] Challenging {playerName} to a competition.");
+                // Debug.Log($"[COMPETE] Challenging {playerName} to a competition.");
+                DialogBox.instance.ShowDialog( $"[SMALL TALK] Dialog Begins with {playerName}.");
                 int competitionRating = UnityEngine.Random.Range(1, 11);
                 if (competitionRating < 5)
                     // camperPoints -= 1;

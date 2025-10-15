@@ -1,9 +1,10 @@
 using UnityEngine;
+using UnityEngine.AI;
 
 public class Camper : MonoBehaviour
 {
     private Rigidbody2D rb;
-
+    private NavMeshAgent agent;
     public CamperStateMachine StateMachine {  get; private set; }
     public IdleState Idle {  get; private set; }
     public WanderState Wander {  get; private set; }
@@ -12,6 +13,7 @@ public class Camper : MonoBehaviour
     [Header("Wander Variables")]
     public float wanderRange = 2f;
     public float wanderSpeed = 2f;
+    public LayerMask obstacleMask;
 
     [Header("Follow Variables")]
     public Transform player;
@@ -28,6 +30,9 @@ public class Camper : MonoBehaviour
 
     private void Start()
     {
+        agent = GetComponent<NavMeshAgent>();
+        agent.updateRotation = false;
+        agent.updateUpAxis = false;
         rb = GetComponent<Rigidbody2D>();
 
 
@@ -39,16 +44,22 @@ public class Camper : MonoBehaviour
         StateMachine.CurrentCamperState.Execute();
 
         //Debug Keys
-        if (Input.GetKeyDown(KeyCode.Alpha1))   // Press 1 to make Camper idle
+        if (Input.GetKeyDown(KeyCode.Alpha8))   // Press 1 to make Camper idle
             StateMachine.ChangeState(Idle);
-        if (Input.GetKeyDown(KeyCode.Alpha2))   // Press 2 to make Camper wander
+        if (Input.GetKeyDown(KeyCode.Alpha9))   // Press 2 to make Camper wander
             StateMachine.ChangeState(Wander);
-        if (Input.GetKeyDown(KeyCode.Alpha3))   // Press 3 to make Camper follow
+        if (Input.GetKeyDown(KeyCode.Alpha0))   // Press 3 to make Camper follow
             StateMachine.ChangeState(Follow);
     }
 
-    public void Move(Vector2 moveDir)
+    public void GoTo(Vector3 position)
     {
-        rb.linearVelocity = moveDir;
+        agent.isStopped = false;
+        agent.SetDestination(position);
+    }
+
+    public void StopMoving()
+    {
+        agent.isStopped = true;
     }
 }
