@@ -10,9 +10,9 @@
 [Bb]uilds/
 [Ll]ogs/
 [Uu]ser[Ss]ettings/
-/HappyCampers/Assets/SuperTiled2Unity/
-/HappyCampers/Assets/SuperTiled2Unity.meta
-/HappyCampers/Packages/
+#/HappyCampers/Assets/SuperTiled2Unity/
+#/HappyCampers/Assets/SuperTiled2Unity.meta
+#/HappyCampers/Packages/
 *.log
 
 # By default unity supports Blender asset imports, *.blend1 blender files do not need to be commited to version control.
