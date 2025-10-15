@@ -44,11 +44,11 @@ public class Camper : MonoBehaviour
         StateMachine.CurrentCamperState.Execute();
 
         //Debug Keys
-        if (Input.GetKeyDown(KeyCode.Alpha1))   // Press 1 to make Camper idle
+        if (Input.GetKeyDown(KeyCode.Alpha8))   // Press 1 to make Camper idle
             StateMachine.ChangeState(Idle);
-        if (Input.GetKeyDown(KeyCode.Alpha2))   // Press 2 to make Camper wander
+        if (Input.GetKeyDown(KeyCode.Alpha9))   // Press 2 to make Camper wander
             StateMachine.ChangeState(Wander);
-        if (Input.GetKeyDown(KeyCode.Alpha3))   // Press 3 to make Camper follow
+        if (Input.GetKeyDown(KeyCode.Alpha0))   // Press 3 to make Camper follow
             StateMachine.ChangeState(Follow);
     }
 

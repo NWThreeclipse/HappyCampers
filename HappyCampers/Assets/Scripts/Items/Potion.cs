@@ -6,11 +6,16 @@ public class Potion : Item
     void Start()
     {
         
+        currentItemType = ItemType.Survivalist;
     }
 
     // Update is called once per frame
     void Update()
     {
         
+    }
+    protected override void OnTriggerEnter2D(Collider2D other)
+    {
+        base.OnTriggerEnter2D(other);
     }
 }
